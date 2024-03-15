@@ -147,6 +147,7 @@ pub enum FeatureFlag {
     ENABLE_CAPTURE_OPTION = 99,
     /// Whether to allow trusted code optimizations.
     ENABLE_TRUSTED_CODE = 100,
+    FAKE_FEATURE_FOR_COMPARISON_TESTING = 1000,
 }
 
 impl FeatureFlag {

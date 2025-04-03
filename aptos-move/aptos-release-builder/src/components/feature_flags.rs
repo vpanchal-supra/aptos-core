@@ -377,9 +377,6 @@ impl From<FeatureFlag> for AptosFeatureFlag {
             FeatureFlag::DisallowInitModuleToPublishModules => {
                 AptosFeatureFlag::_DISALLOW_INIT_MODULE_TO_PUBLISH_MODULES
             },
-            FeatureFlag::TransactionContextHashFunctionUpdate => {
-                AptosFeatureFlag::TRANSACTION_CONTEXT_HASH_FUNCTION_UPDATE
-            },
             FeatureFlag::FakeFeatureForComparisonTesting => {
                 AptosFeatureFlag::FAKE_FEATURE_FOR_COMPARISON_TESTING
             },
@@ -560,9 +557,6 @@ impl From<AptosFeatureFlag> for FeatureFlag {
             AptosFeatureFlag::_ENABLE_LOADER_V2 => FeatureFlag::EnableLoaderV2,
             AptosFeatureFlag::_DISALLOW_INIT_MODULE_TO_PUBLISH_MODULES => {
                 FeatureFlag::DisallowInitModuleToPublishModules
-            },
-            AptosFeatureFlag::TRANSACTION_CONTEXT_HASH_FUNCTION_UPDATE => {
-                FeatureFlag::TransactionContextHashFunctionUpdate
             },
             AptosFeatureFlag::FAKE_FEATURE_FOR_COMPARISON_TESTING => {
                 FeatureFlag::FakeFeatureForComparisonTesting

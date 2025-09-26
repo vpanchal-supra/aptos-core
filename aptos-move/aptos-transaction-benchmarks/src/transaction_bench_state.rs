@@ -272,6 +272,7 @@ where
             .expect("Parallel block execution should succeed")
             .into_transaction_outputs_forced();
         let exec_time = timer.elapsed().as_millis();
+        println!("Execution time: {}", exec_time);
 
         (output, block_size * 1000 / exec_time as usize)
     }

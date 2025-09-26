@@ -17,6 +17,7 @@
 mod bad_transaction;
 mod create_account;
 mod peer_to_peer;
+mod temp_heavy_calculation;
 mod universe;
 use crate::{
     account::{Account, AccountData},
@@ -33,6 +34,7 @@ use once_cell::sync::Lazy;
 pub use peer_to_peer::*;
 use proptest::{prelude::*, strategy::Union};
 use std::{fmt, sync::Arc};
+pub use temp_heavy_calculation::TempHeavyCalculationGen;
 pub use universe::*;
 
 static UNIVERSE_SIZE: Lazy<usize> = Lazy::new(|| {

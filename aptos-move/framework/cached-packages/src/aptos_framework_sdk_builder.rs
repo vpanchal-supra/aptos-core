@@ -1141,6 +1141,10 @@ pub enum EntryFunctionCall {
         new_voter: AccountAddress,
     },
 
+    TempHeavyCalculation {
+        iterations: u64,
+    },
+
     TransactionFeeConvertToAptosFaBurnRef {},
 
     /// Used in on-chain governances to update the major version for the next epoch.
@@ -1911,6 +1915,7 @@ impl EntryFunctionCall {
                 operator,
                 new_voter,
             } => staking_proxy_set_voter(operator, new_voter),
+            TempHeavyCalculation { iterations } => temp_heavy_calculation(iterations),
             TransactionFeeConvertToAptosFaBurnRef {} => {
                 transaction_fee_convert_to_aptos_fa_burn_ref()
             },
@@ -5118,6 +5123,21 @@ pub fn staking_proxy_set_voter(
     ))
 }
 
+pub fn temp_heavy_calculation(iterations: u64) -> TransactionPayload {
+    TransactionPayload::EntryFunction(EntryFunction::new(
+        ModuleId::new(
+            AccountAddress::new([
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 1,
+            ]),
+            ident_str!("temp").to_owned(),
+        ),
+        ident_str!("heavy_calculation").to_owned(),
+        vec![],
+        vec![bcs::to_bytes(&iterations).unwrap()],
+    ))
+}
+
 pub fn transaction_fee_convert_to_aptos_fa_burn_ref() -> TransactionPayload {
     TransactionPayload::EntryFunction(EntryFunction::new(
         ModuleId::new(
@@ -7286,6 +7306,16 @@ mod decoder {
         }
     }
 
+    pub fn temp_heavy_calculation(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
+        if let TransactionPayload::EntryFunction(script) = payload {
+            Some(EntryFunctionCall::TempHeavyCalculation {
+                iterations: bcs::from_bytes(script.args().get(0)?).ok()?,
+            })
+        } else {
+            None
+        }
+    }
+
     pub fn transaction_fee_convert_to_aptos_fa_burn_ref(
         payload: &TransactionPayload,
     ) -> Option<EntryFunctionCall> {
@@ -8088,6 +8118,10 @@ static SCRIPT_FUNCTION_DECODER_MAP: once_cell::sync::Lazy<EntryFunctionDecoderMa
         map.insert(
             "staking_proxy_set_voter".to_string(),
             Box::new(decoder::staking_proxy_set_voter),
+        );
+        map.insert(
+            "temp_heavy_calculation".to_string(),
+            Box::new(decoder::temp_heavy_calculation),
         );
         map.insert(
             "transaction_fee_convert_to_aptos_fa_burn_ref".to_string(),

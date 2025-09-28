@@ -38,7 +38,7 @@ use std::{
 };
 use tempfile::NamedTempFile;
 
-const DISASSEMBLER_EXTENSION: &str = "mv.asm";
+const DISASSEMBLER_EXTENSION: &str = "mv.masm";
 const DECOMPILER_EXTENSION: &str = "mv.move";
 
 /// Disassemble the Move bytecode pointed to in the textual representation

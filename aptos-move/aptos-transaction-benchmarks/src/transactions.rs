@@ -174,9 +174,9 @@ where
 /// sufficiently large balance for gas.
 pub(crate) fn universe_strategy(
     num_accounts: usize,
-    num_transactions: usize,
+    _num_transactions: usize,
     account_pick_style: AccountPickStyle,
 ) -> impl Strategy<Value = AccountUniverseGen> {
-    let balance = TXN_RESERVED * num_transactions as u64 * 5;
+    let balance = 10_000_000_000u64;
     AccountUniverseGen::strategy(num_accounts, balance..(balance + 1), account_pick_style)
 }

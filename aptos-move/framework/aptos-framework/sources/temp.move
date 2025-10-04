@@ -28,7 +28,7 @@ module aptos_framework::temp {
     const MAX_ACC_PUSHER: u64 = 2;
 
     
-    fun init_module(signer: &signer) {
+    public(friend) fun initialize(signer: &signer) {
         move_to(signer, Data {
             inner: 0
         });
@@ -38,7 +38,7 @@ module aptos_framework::temp {
     }
 
     public entry fun heavy_calculation(iterations: u64) acquires Observability, Data {
-        let observability = borrow_global_mut<Observability>(@temp_package);
+        let observability = borrow_global_mut<Observability>(@aptos_framework);
         let counter = observability.counter + 1;
         observability.counter = counter;
         event::emit(NewObservability {
@@ -55,7 +55,7 @@ module aptos_framework::temp {
             i = i + 1;
         };
 
-        let data = borrow_global_mut<Data>(@temp_package);
+        let data = borrow_global_mut<Data>(@aptos_framework);
         data.inner = acc;
         event::emit(NewData {
             data: acc
